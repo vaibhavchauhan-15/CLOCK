@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap');
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #060615;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* ── Ambient background orbs ── */
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+}
+
+.orb-1 {
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, rgba(168,85,247,0.35), transparent 70%);
+    top: -160px;
+    left: -160px;
+}
+
+.orb-2 {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(0,166,255,0.28), transparent 70%);
+    bottom: -120px;
+    right: -120px;
+}
+
+.orb-3 {
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(255,61,88,0.18), transparent 70%);
+    top: 55%;
+    left: 55%;
+}
+
+/* ── Layout ── */
+.container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* ── Glowing gradient outer ring ── */
+.clock-ring {
+    padding: 3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff3d58, #a855f7, #00a6ff, #00ffcc);
+    box-shadow:
+        0 0 40px rgba(168,85,247,0.55),
+        0 0 80px rgba(0,166,255,0.35),
+        0 0 130px rgba(255,61,88,0.2);
+    animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+    from {
+        box-shadow:
+            0 0 40px rgba(168,85,247,0.55),
+            0 0 80px rgba(0,166,255,0.35);
+    }
+    to {
+        box-shadow:
+            0 0 65px rgba(168,85,247,0.85),
+            0 0 130px rgba(0,166,255,0.55),
+            0 0 200px rgba(255,61,88,0.25);
+    }
+}
+
+/* ── Clock face ── */
+.clock {
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 28%, rgba(255,255,255,0.07) 0%, transparent 55%),
+        radial-gradient(circle at center, #0d0d22 0%, #060615 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* ── Tick marks ── */
+.ticks {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.tick {
+    position: absolute;
+    left: calc(50% - 1px);
+    top: 10px;
+    width: 2px;
+    border-radius: 2px;
+    transform-origin: center 160px;
+}
+
+.tick.major {
+    width: 3px;
+    left: calc(50% - 1.5px);
+    height: 14px;
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+.tick.minor {
+    height: 6px;
+    background: rgba(255,255,255,0.22);
+}
+
+/* ── Number labels ── */
+.clock span {
+    position: absolute;
+    transform: rotate(calc(30deg * var(--i)));
+    inset: 24px;
+    text-align: center;
+    z-index: 2;
+}
+
+.clock span b {
+    transform: rotate(calc(-30deg * var(--i)));
+    display: inline-block;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+/* ── Clock hands ── */
+.hand {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 5;
+}
+
+.hand i {
+    position: absolute;
+    background: var(--clr);
+    width: var(--w, 4px);
+    height: var(--h);
+    border-radius: 8px;
+    box-shadow: 0 0 8px var(--clr), 0 0 20px var(--clr);
+}
+
+/* ── Center dot ── */
+.center-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    z-index: 10;
+    box-shadow:
+        0 0 10px rgba(255,255,255,0.9),
+        0 0 28px rgba(255,255,255,0.5);
+}
+
+/* ── Info panel ── */
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.digital-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #fff;
+    text-shadow:
+        0 0 20px rgba(168,85,247,0.9),
+        0 0 45px rgba(0,166,255,0.6);
+}
+
+.date-display {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+}
+
+/* ── IST timezone badge ── */
+.timezone-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 20px;
+    border-radius: 24px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00ffcc;
+    box-shadow: 0 0 6px #00ffcc, 0 0 14px #00ffcc;
+    animation: pulseDot 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulseDot {
+    0%, 100% { transform: scale(1);   opacity: 1; }
+    50%       { transform: scale(1.7); opacity: 0.45; }
+}
+
+
+
